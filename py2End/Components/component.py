@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import *
+from typing import Dict, Any, List, Tuple
 from utils import Utils
 
 import gi
@@ -8,23 +8,31 @@ from gi.repository import Atspi
 
 
 class E2eComponent:
+
     def __init__(self: E2eComponent, obj: Atspi.Object) -> None:
-        pass
+        self.__index = obj.get_index_in_parent()
+        self.__type = obj.get_role_name()
+        self.__component = obj
+        self.__attributes = obj.get_attributes()
+
+    # getters de atributos
 
     def get_value(self: E2eComponent) -> str:
-        return self.value
+        return self.__value
 
     def get_type(self: E2eComponent) -> str:
-        return self.type
-
-    def get_parent(self: E2eComponent) -> str:
-        return self.component.get_parent()
+        return self.__type
 
     def get_index(self: E2eComponent) -> int:
-        return self.index
+        return self.__index
 
     def get_attributes(self: E2eComponent) -> Dict[str, Any]:
-        return self.attributes
+        return self.__attributes
+
+    # metodos publicos
+
+    def get_parent(self: E2eComponent) -> str:
+        return self.__component.get_parent()
 
     def get_childrens(self: E2eComponent) -> List[E2eComponent]:
         childrens = [self.component.get_child_at_index(i)

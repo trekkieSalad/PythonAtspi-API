@@ -1,6 +1,5 @@
 from __future__ import annotations
-from component import E2eComponent
-import componentType
+from components import button
 from typing import *
 
 import gi
@@ -15,7 +14,7 @@ class Utils:
 
     def set_ipm_object(self: Utils, obj: Atspi.Object):
         if obj.get_role_name() == "push button":
-            return componentType.Button(obj)
+            return button.Button(obj)
         elif obj.get_role_name() == "combo box":
             return componentType.ComboBox(obj)
         elif obj.get_role_name() == "label":
