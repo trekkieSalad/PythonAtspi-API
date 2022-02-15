@@ -1,0 +1,90 @@
+@startuml py2End
+
+E2eComponent <|---- Container
+E2eComponent <|---- Button
+E2eComponent <|---- Cell
+Container <|---- Table
+Container *----> E2eComponent
+
+package py2End{
+
+  abstract E2eComponent{
+    ' Attributes
+    - __index : int
+    - __type : String
+    - __value : String
+    - __component : Atspi.Object
+    - __attributes : Dict[String, String]
+
+    ' Methods
+
+    ' Construtor
+
+    + __init__( self : E2eComponent, obj : Atspi.Object ) : void
+
+    ' Getters
+    
+    + get_index( self : E2eComponent ) : int
+    + get_type( self : E2eComponent ) : String
+    + get_value( self : E2eComponent ) : String
+    + get_component( self : E2eComponent ) : Atspi.Object
+    + get_attributes( self : E2eComponent ) : Dict[String, String]
+
+    ' Public Methods
+
+    + get_parent( self : Container ) : E2eComponent
+    + get_size(self : E2eComponent) : Tuple[int, int]
+    + get_position(self : E2eComponent) : Tuple[int, int]
+    + get_ancestors() : List[E2eComponent]
+    + is_child_of( self : Container, parent : E2eComponent ) : bool
+    + is_descendant_of(self: E2eComponent, ancestor: Container) : bool
+
+    ' Private Methods
+
+    - __ancestors( self : E2eComponent ) : List[Atspi.Object]
+    - __parent( self : E2eComponent ) : Atspi.Object
+
+  }
+
+  abstract Container{
+    ' Attributes
+
+    - __childrens : List[E2eComponent]
+
+    ' Construtor
+
+    + __init__( self : Container, obj : Atspi.Object ) : void
+
+    ' Methods
+
+    ' Public Methods
+
+    + get_childrens( self : Container ) : List[E2eComponent]
+    + get_childrens_number( self : Container ) : int
+    + get_descendants( self : Container ) : List[E2eComponent]
+    + get_descendants_number( self : Container ) : int
+    + is_parent_of( self : Container, child : E2eComponent ) : bool
+    + is_ancestor_of( self : Container, descendant : E2eComponent ) : bool
+  }
+
+  class Button{
+
+    ' Construtor
+
+    + __init__( self : Button, obj : Atspi.Object ) : void
+
+    ' Methods
+
+    ' Public Methods
+
+    + do( self : Button, action : Any[String, int] ) : void
+
+    ' Not Implemented
+    * get_actions( self : Button ) : List[String]
+  }
+
+}
+
+
+
+@enduml
